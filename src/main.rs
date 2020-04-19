@@ -21,9 +21,8 @@ fn main() -> ! {
     let mut timg0 = dp.TIMG0;
     let mut timg1 = dp.TIMG1;
 
-    watchdog::disable(&mut rtccntl, &mut timg0, &mut timg1);
+    watchdog::disable_all(&mut rtccntl, &mut timg0, &mut timg1);
 
-    // let pins = dp.GPIO.split();
     let pins = dp.GPIO.split();
     let mut led = pins.gpio2.into_open_drain_output();
 
