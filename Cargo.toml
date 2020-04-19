@@ -1,0 +1,26 @@
+[package]
+name = "esp32-blinky"
+version = "0.1.0"
+authors = ["Han Hossain <ahanuf12@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+xtensa-lx6-rt = { git = "https://github.com/esp-rs/xtensa-lx6-rt.git", rev = "62229c1" }
+esp32 = "0.3.0"
+embedded-hal = { version = "0.2.3", features = ["unproven"] }
+panic-halt = "0.2.0"
+esp32-hal = { git = "https://github.com/esp-rs/esp32-hal.git", rev = "f2c6fc9" }
+
+[profile.dev]
+lto = true 
+incremental = false
+debug = false # debug adds frame pointers - which must be omitted
+codegen-units = 1
+
+[profile.release]
+lto = true
+incremental = false
+debug = false # debug adds frame pointers - which must be omitted
+codegen-units = 1
