@@ -3,9 +3,9 @@
 
 extern crate panic_halt;
 
-use esp32_hal as hal;
 use xtensa_lx6_rt::delay;
-use hal::prelude::*;
+use esp32_hal::prelude::*;
+use esp32::Peripherals;
 
 mod watchdog;
 
@@ -15,7 +15,7 @@ const CORE_HZ: u32 = 40_000_000;
 
 #[no_mangle]
 fn main() -> ! {
-    let dp = unsafe { hal::esp32::Peripherals::steal() };
+    let dp = unsafe { Peripherals::steal() };
 
     let mut rtccntl = dp.RTCCNTL;
     let mut timg0 = dp.TIMG0;

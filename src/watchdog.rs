@@ -1,6 +1,6 @@
 //! A bunch of watchdog helper methods
 
-use esp32::{RTCCNTL, TIMG0, TIMG1};
+use esp32::{RTCCNTL, TIMG0, TIMG1, rtccntl, timg};
 
 const PROTECT_RESET_VALUE: u32 = 0x50D83AA1;
 
@@ -11,7 +11,8 @@ pub fn disable_all(rtccntl: &mut RTCCNTL, timg0: &mut TIMG0, timg1: &mut TIMG1) 
 
 /// Disables the RTC Watchdog Timer (RWDT)
 pub fn disable_rtc(rtccntl: &mut RTCCNTL) {
-    rtccntl.wdtwprotect.write(|w| unsafe { w.bits(PROTECT_RESET_VALUE) });
+    let wp = WriteProtection::RTC(&rtccntl.wdtwprotect);
+    wp.disable();
 
     rtccntl.wdtconfig0.modify(|_, w| unsafe {
         w
@@ -29,14 +30,17 @@ pub fn disable_rtc(rtccntl: &mut RTCCNTL) {
             .clear_bit()
     });
 
-    rtccntl.wdtwprotect.write(|w| unsafe { w.bits(0x0) });
+    wp.enable();
 }
 
 /// Disables the Main System Watchdog Timers (MWDT)
 pub fn disable_main_system(timg0: &mut TIMG0, timg1: &mut TIMG1) {
+    let wp0 = WriteProtection::MainSystem(&timg0.wdtwprotect);
+    let wp1 = WriteProtection::MainSystem(&timg1.wdtwprotect);
+
     // disable write protection
-    timg0.wdtwprotect.write(|w| unsafe { w.bits(PROTECT_RESET_VALUE) });
-    timg1.wdtwprotect.write(|w| unsafe { w.bits(PROTECT_RESET_VALUE) });
+    wp0.disable();
+    wp1.disable();
 
     // disable watchdogs
     timg0
@@ -47,6 +51,27 @@ pub fn disable_main_system(timg0: &mut TIMG0, timg1: &mut TIMG1) {
         .write(|w| unsafe { w.bits(0x0) });
 
     // enable write protection
-    timg1.wdtwprotect.write(|w| unsafe { w.bits(0x0) });
-    timg0.wdtwprotect.write(|w| unsafe { w.bits(0x0) });
+    wp0.enable();
+    wp1.enable();
+}
+
+enum WriteProtection<'a> {
+    RTC(&'a rtccntl::WDTWPROTECT),
+    MainSystem(&'a timg::WDTWPROTECT),
+}
+
+impl<'a> WriteProtection<'a> {
+    fn disable(&self) {
+        match self {
+            WriteProtection::RTC(reg) => reg.write(|w| unsafe { w.bits(PROTECT_RESET_VALUE) }),
+            WriteProtection::MainSystem(reg) => reg.write(|w| unsafe { w.bits(PROTECT_RESET_VALUE) }),
+        }
+    }
+
+    fn enable(&self) {
+        match self {
+            WriteProtection::RTC(reg) => reg.write(|w| unsafe { w.bits(0x0) }),
+            WriteProtection::MainSystem(reg) => reg.write(|w| unsafe { w.bits(0x0) }),
+        }
+    }
 }
