@@ -5,14 +5,14 @@ extern crate panic_halt;
 
 use core::fmt::Write;
 use esp32::Peripherals;
-// use esp32_hal::clock_control::sleep;
+use esp32_hal::clock_control::sleep;
 
 use esp32_hal::prelude::*;
 use esp32_logger;
 
 mod watchdog;
 
-// const BLINK_HZ: Hertz = Hertz(2);
+const BLINK_HZ: Hertz = Hertz(2);
 
 #[no_mangle]
 fn main() -> ! {
@@ -32,6 +32,8 @@ fn main() -> ! {
         unsafe {
             esp32_logger::log("hello world from rust!");
         }
+
+        sleep(1.s());
 
         // led.set_high().unwrap();
         // sleep((Hertz(1_000_000) / BLINK_HZ).us());
