@@ -8,8 +8,8 @@ use esp32::Peripherals;
 // use esp32_hal::clock_control::sleep;
 
 use esp32_hal::prelude::*;
+use esp32_logger;
 
-mod serial;
 mod watchdog;
 
 // const BLINK_HZ: Hertz = Hertz(2);
@@ -26,15 +26,10 @@ fn main() -> ! {
     // let pins = dp.GPIO.split();
     // let mut led = pins.gpio2.into_open_drain_output();
 
-    serial::setup(
-        dp.UART0,
-        dp.RTCCNTL,
-        dp.APB_CTRL,
-        dp.DPORT
-    );
+    esp32_logger::setup(dp.UART0, dp.RTCCNTL, dp.APB_CTRL, dp.DPORT);
 
     loop {
-        serial::log("hello world");
+        esp32_logger::log("hello world from rust!");
 
         // led.set_high().unwrap();
         // sleep((Hertz(1_000_000) / BLINK_HZ).us());

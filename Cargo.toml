@@ -7,11 +7,12 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-xtensa-lx6-rt = { git = "https://github.com/esp-rs/xtensa-lx6-rt.git", rev = "62229c1" }
+xtensa-lx6-rt = { git = "https://github.com/esp-rs/xtensa-lx6-rt", rev = "62229c1" }
 esp32 = "0.3.0"
 embedded-hal = { version = "0.2.3", features = ["unproven"] }
 panic-halt = "0.2.0"
-esp32-hal = { git = "https://github.com/esp-rs/esp32-hal.git", rev = "f2c6fc9" }
+esp32-hal = { git = "https://github.com/esp-rs/esp32-hal", rev = "f2c6fc9" }
+esp32-logger = { git = "https://github.com/hanhossain/esp32-logger" }
 
 [profile.dev]
 lto = true 

@@ -35,8 +35,21 @@ version = "0.1.0"
 dependencies = [
  "embedded-hal",
  "esp32",
- "esp32-hal",
+ "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal.git?rev=f2c6fc9)",
+ "esp32-logger",
  "panic-halt",
+ "xtensa-lx6-rt",
+]
+
+[[package]]
+name = "esp32-hal"
+version = "0.1.0"
+source = "git+https://github.com/esp-rs/esp32-hal#6f9ba7825ee287de8ddcf62b560062be0af2abb9"
+dependencies = [
+ "embedded-hal",
+ "esp32",
+ "nb",
+ "spin",
  "xtensa-lx6-rt",
 ]
 
@@ -50,6 +63,15 @@ dependencies = [
  "nb",
  "spin",
  "xtensa-lx6-rt",
+]
+
+[[package]]
+name = "esp32-logger"
+version = "0.1.0"
+source = "git+https://github.com/hanhossain/esp32-logger#c4ec79be12b343e7b8fd733870c97fca904c666f"
+dependencies = [
+ "esp32",
+ "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal)",
 ]
 
 [[package]]
