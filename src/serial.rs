@@ -9,31 +9,6 @@ use esp32_hal::dport::Split;
 static mut STORED_TX: Option<Tx<UART0>> = None;
 static mut STORED_RX: Option<Rx<UART0>> = None;
 
-pub fn get(uart0: UART0, rtccntl: RTCCNTL, apb_ctrl: APB_CTRL, dport: DPORT) -> (Tx<UART0>, Rx<UART0>) {
-    let (mut dport, dport_clock_control) = dport.split();
-    let clock_control = ClockControl::new(
-        rtccntl,
-        apb_ctrl,
-        dport_clock_control,
-        XTAL_FREQUENCY_AUTO
-    )
-    .unwrap();
-
-    let (clock_control_config, mut watchdog) = clock_control.freeze().unwrap();
-    watchdog.disable();
-
-    let serial = Serial::uart0(
-        uart0,
-        (NoTx, NoRx),
-        Config::default().baudrate(115200.Hz()),
-        clock_control_config,
-        &mut dport
-    )
-    .unwrap();
-
-    serial.split()
-}
-
 pub fn setup(uart0: UART0, rtccntl: RTCCNTL, apb_ctrl: APB_CTRL, dport: DPORT) {
     let (mut dport, dport_clock_control) = dport.split();
     let clock_control = ClockControl::new(
