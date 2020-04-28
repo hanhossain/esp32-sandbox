@@ -26,17 +26,15 @@ fn main() -> ! {
     // let pins = dp.GPIO.split();
     // let mut led = pins.gpio2.into_open_drain_output();
 
-    let (mut tx, _) = serial::get(
+    serial::setup(
         dp.UART0,
         dp.RTCCNTL,
         dp.APB_CTRL,
         dp.DPORT
     );
 
-    writeln!(tx, "ESP32 Started\r").unwrap();
-
     loop {
-        //write!(tx, "line1\r\nline2\r\n").unwrap();
+        serial::log("hello world");
 
         // led.set_high().unwrap();
         // sleep((Hertz(1_000_000) / BLINK_HZ).us());
