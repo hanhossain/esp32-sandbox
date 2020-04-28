@@ -29,7 +29,9 @@ fn main() -> ! {
     esp32_logger::setup(dp.UART0, dp.RTCCNTL, dp.APB_CTRL, dp.DPORT);
 
     loop {
-        esp32_logger::log("hello world from rust!");
+        unsafe {
+            esp32_logger::log("hello world from rust!");
+        }
 
         // led.set_high().unwrap();
         // sleep((Hertz(1_000_000) / BLINK_HZ).us());
