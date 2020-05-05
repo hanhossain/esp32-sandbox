@@ -32,19 +32,7 @@ dependencies = [
 [[package]]
 name = "esp32-hal"
 version = "0.1.0"
-source = "git+https://github.com/esp-rs/esp32-hal#6f9ba7825ee287de8ddcf62b560062be0af2abb9"
-dependencies = [
- "embedded-hal",
- "esp32",
- "nb",
- "spin",
- "xtensa-lx6-rt",
-]
-
-[[package]]
-name = "esp32-hal"
-version = "0.1.0"
-source = "git+https://github.com/esp-rs/esp32-hal?rev=3d007f4#3d007f4c1230ca01c6f0c2974ec05c72b97e6d12"
+source = "git+https://github.com/esp-rs/esp32-hal#3d007f4c1230ca01c6f0c2974ec05c72b97e6d12"
 dependencies = [
  "embedded-hal",
  "esp32",
@@ -56,9 +44,10 @@ dependencies = [
 [[package]]
 name = "esp32-logger"
 version = "0.1.0"
+source = "git+https://github.com/hanhossain/esp32-logger#52288c253d78f77b09fc547a89d09247b13a2744"
 dependencies = [
  "esp32",
- "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal)",
+ "esp32-hal",
 ]
 
 [[package]]
@@ -67,7 +56,7 @@ version = "0.1.0"
 dependencies = [
  "embedded-hal",
  "esp32",
- "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal?rev=3d007f4)",
+ "esp32-hal",
  "esp32-logger",
 ]
 
