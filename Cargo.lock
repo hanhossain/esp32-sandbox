@@ -71,7 +71,6 @@ dependencies = [
  "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal?rev=3d007f4)",
  "esp32-logger",
  "panic-halt",
- "xtensa-lx6-rt",
 ]
 
 [[package]]
