@@ -56,7 +56,6 @@ dependencies = [
 [[package]]
 name = "esp32-logger"
 version = "0.1.0"
-source = "git+https://github.com/hanhossain/esp32-logger#040e0b2dd1a430fc43317b1560d2733a53fbbc4b"
 dependencies = [
  "esp32",
  "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal)",
@@ -70,7 +69,6 @@ dependencies = [
  "esp32",
  "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal?rev=3d007f4)",
  "esp32-logger",
- "panic-halt",
 ]
 
 [[package]]
@@ -78,12 +76,6 @@ name = "nb"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b1411551beb3c11dedfb0a90a0fa256b47d28b9ec2cdff34c25a2fa59e45dbdc"
-
-[[package]]
-name = "panic-halt"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "de96540e0ebde571dc55c73d60ef407c653844e6f9a1e2fdbd40c07b9252d812"
 
 [[package]]
 name = "r0"
