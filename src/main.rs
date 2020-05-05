@@ -6,7 +6,7 @@ extern crate panic_halt;
 use core::fmt::Write;
 use esp32::Peripherals;
 use esp32_hal::prelude::*;
-use esp32_logger;
+use esp32_logger::{log, STORED_TX};
 
 mod watchdog;
 
@@ -20,10 +20,11 @@ fn main() -> ! {
     watchdog::disable_main_system(&mut timg0, &mut timg1);
 
     esp32_logger::setup(dp.UART0, dp.RTCCNTL, dp.APB_CTRL, dp.DPORT);
+    log!("Hello world from rust!");
 
+    let mut counter = 0;
     loop {
-        unsafe {
-            esp32_logger::log("hello world from rust!");
-        }
+        log!("counter: {}", counter);
+        counter += 1;
     }
 }

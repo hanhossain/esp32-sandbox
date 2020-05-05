@@ -3,7 +3,7 @@
 cargo xbuild --release
 
 # change this for release flashes
-BIN_PATH=target/xtensa-esp32-none-elf/release/esp32-blinky
+BIN_PATH=target/xtensa-esp32-none-elf/release/esp32-sandbox
 
 rm $BIN_PATH.bin
 

@@ -1,5 +1,5 @@
 [package]
-name = "esp32-blinky"
+name = "esp32-sandbox"
 version = "0.1.0"
 authors = ["Han Hossain <ahanuf12@gmail.com>"]
 edition = "2018"
@@ -11,7 +11,7 @@ xtensa-lx6-rt = { git = "https://github.com/esp-rs/xtensa-lx6-rt", rev = "62229c
 esp32 = "0.3.0"
 embedded-hal = { version = "0.2.3", features = ["unproven"] }
 panic-halt = "0.2.0"
-esp32-hal = { git = "https://github.com/esp-rs/esp32-hal", rev = "f2c6fc9" }
+esp32-hal = { git = "https://github.com/esp-rs/esp32-hal", rev = "3d007f4" }
 esp32-logger = { git = "https://github.com/hanhossain/esp32-logger" }
 
 [profile.dev]

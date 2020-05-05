@@ -30,18 +30,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "esp32-blinky"
-version = "0.1.0"
-dependencies = [
- "embedded-hal",
- "esp32",
- "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal.git?rev=f2c6fc9)",
- "esp32-logger",
- "panic-halt",
- "xtensa-lx6-rt",
-]
-
-[[package]]
 name = "esp32-hal"
 version = "0.1.0"
 source = "git+https://github.com/esp-rs/esp32-hal#6f9ba7825ee287de8ddcf62b560062be0af2abb9"
@@ -56,7 +44,7 @@ dependencies = [
 [[package]]
 name = "esp32-hal"
 version = "0.1.0"
-source = "git+https://github.com/esp-rs/esp32-hal.git?rev=f2c6fc9#f2c6fc956aa77f15c299ef1f71ad26b78a421e6a"
+source = "git+https://github.com/esp-rs/esp32-hal?rev=3d007f4#3d007f4c1230ca01c6f0c2974ec05c72b97e6d12"
 dependencies = [
  "embedded-hal",
  "esp32",
@@ -68,10 +56,22 @@ dependencies = [
 [[package]]
 name = "esp32-logger"
 version = "0.1.0"
-source = "git+https://github.com/hanhossain/esp32-logger#c4ec79be12b343e7b8fd733870c97fca904c666f"
+source = "git+https://github.com/hanhossain/esp32-logger#040e0b2dd1a430fc43317b1560d2733a53fbbc4b"
 dependencies = [
  "esp32",
  "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal)",
+]
+
+[[package]]
+name = "esp32-sandbox"
+version = "0.1.0"
+dependencies = [
+ "embedded-hal",
+ "esp32",
+ "esp32-hal 0.1.0 (git+https://github.com/esp-rs/esp32-hal?rev=3d007f4)",
+ "esp32-logger",
+ "panic-halt",
+ "xtensa-lx6-rt",
 ]
 
 [[package]]
