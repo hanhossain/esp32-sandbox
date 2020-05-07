@@ -26,6 +26,8 @@ fn main() -> ! {
 
     loop {
         log!("counter: {}", counter);
+        warn!("this is a warning");
+        error!("this is an error");
         counter += 1;
 
         sleep(1.s());
@@ -34,6 +36,6 @@ fn main() -> ! {
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    log!("{:?}", info);
+    error!("{:?}", info);
     loop {}
 }
