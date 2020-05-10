@@ -17,18 +17,12 @@ pub fn disable_rtc(rtccntl: &mut RTCCNTL) {
     wp.disable();
 
     rtccntl.wdtconfig0.modify(|_, w| unsafe {
-        w.wdt_stg0()
-            .bits(0x0)
-            .wdt_stg1()
-            .bits(0x0)
-            .wdt_stg2()
-            .bits(0x0)
-            .wdt_stg3()
-            .bits(0x0)
-            .wdt_flashboot_mod_en()
-            .clear_bit()
-            .wdt_en()
-            .clear_bit()
+        w.wdt_stg0().bits(0x0);
+        w.wdt_stg1().bits(0x0);
+        w.wdt_stg2().bits(0x0);
+        w.wdt_stg3().bits(0x0);
+        w.wdt_flashboot_mod_en().clear_bit();
+        w.wdt_en().clear_bit()
     });
 
     wp.enable();
