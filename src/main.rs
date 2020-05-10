@@ -1,7 +1,6 @@
 #![no_std]
 #![no_main]
 
-use core::fmt::Write;
 use core::panic::PanicInfo;
 use esp32::Peripherals;
 use esp32_hal::clock_control::sleep;
@@ -19,18 +18,20 @@ fn main() -> ! {
 
     watchdog::disable_main_system(&mut timg0, &mut timg1);
 
-    setup_logger!(dp);
-    log!("Hello world from rust!");
+    let (mut clock_control_config, ..) = setup_logger!(dp);
 
-    let mut counter = 0;
+    clock_control_config.start_core(1, run_core1).unwrap();
 
     loop {
-        log!("counter: {}", counter);
-        warn!("this is a warning");
-        error!("this is an error");
-        counter += 1;
-
         sleep(1.s());
+        log!("Core 0");
+    }
+}
+
+fn run_core1() -> ! {
+    loop {
+        sleep(3.s());
+        log!("Core 1");
     }
 }
 

@@ -44,7 +44,7 @@ dependencies = [
 [[package]]
 name = "esp32-logger"
 version = "0.1.0"
-source = "git+https://github.com/hanhossain/esp32-logger#4dd8421f254b88db0b5c9d5f491be425151f655e"
+source = "git+https://github.com/hanhossain/esp32-logger#d91a347e6b588bf57cf711994ef254514ecdc29b"
 dependencies = [
  "esp32",
  "esp32-hal",
@@ -59,6 +59,8 @@ dependencies = [
  "esp32",
  "esp32-hal",
  "esp32-logger",
+ "spin",
+ "xtensa-lx6-rt",
 ]
 
 [[package]]
