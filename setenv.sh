@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/zsh
 
 # change this to the directory of where you built rustc for xtensa
-XTENSA_RUSTC=/Users/hanhossain/Developer/github/rust-xtensa
+XTENSA_RUSTC=/Users/hanhossain/Developer/github/MabezDev/rust-xtensa
 TARGET_TRIPLE=x86_64-apple-darwin
 
 export RUST_BACKTRACE=1 
