@@ -8,4 +8,4 @@ edition = "2018"
 
 [dependencies]
 esp32-hal = { git = "https://github.com/esp-rs/esp32-hal", features = ["external_ram", "all_in_ram"] }
-esp32-logger = { path = "../esp32-logger" }
+esp32-logger = { git = "https://github.com/hanhossain/esp32-logger" }

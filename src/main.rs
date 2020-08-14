@@ -3,9 +3,8 @@
 
 use core::panic::PanicInfo;
 use esp32_hal::{
-    clock_control::{ClockControl, XTAL_FREQUENCY_AUTO},
+    clock_control::{sleep, ClockControl, XTAL_FREQUENCY_AUTO},
     dport::Split,
-    dprint,
     prelude::*,
     target,
     timer::Timer,
@@ -37,7 +36,7 @@ fn main() -> ! {
     watchdog0.disable();
     watchdog1.disable();
 
-    esp32_logger::setup(
+    setup_logger(
         dp.UART0,
         gpio.gpio1,
         gpio.gpio3,
@@ -45,17 +44,16 @@ fn main() -> ! {
         &mut dport,
     );
 
-    dprint!("this is from dprint\r\n");
-
-    log!("hello from logger");
-    warn!("this is a warning");
-    error!("something broke");
-
-    loop {}
+    let mut counter = 0;
+    loop {
+        log!("counter: {}", counter);
+        sleep(500_000.us());
+        counter += 1;
+    }
 }
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    dprint!("\r\n{:?}\r\n", info);
+    error!("\r\n{:?}", info);
     loop {}
 }
