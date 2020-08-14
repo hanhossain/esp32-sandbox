@@ -93,10 +93,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "esp32-logger"
+version = "0.1.0"
+dependencies = [
+ "esp32-hal",
+ "spin",
+]
+
+[[package]]
 name = "esp32-sandbox"
 version = "0.1.0"
 dependencies = [
  "esp32-hal",
+ "esp32-logger",
 ]
 
 [[package]]
