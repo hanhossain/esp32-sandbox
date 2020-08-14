@@ -2,7 +2,7 @@
 
 set -e
 
-cargo xbuild
+#cargo xbuild
 
 # change this for release flashes
 BIN_PATH=target/xtensa-esp32-none-elf/debug/esp32-sandbox
