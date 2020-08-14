@@ -11,9 +11,9 @@ dependencies = [
 
 [[package]]
 name = "esp32"
-version = "0.2.2"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ffb52edc619105349a26b87c8ac2f35dacf40a5dd7a2d4e29c1572301ee34994"
+checksum = "17c8a7d7eef50e52ff7607ecace8d40f013a3f06d263d86583f0bff239932bc0"
 dependencies = [
  "bare-metal",
  "vcell",

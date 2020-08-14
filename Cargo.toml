@@ -8,7 +8,7 @@ edition = "2018"
 
 [dependencies]
 xtensa-lx6-rt = { git = "https://github.com/esp-rs/xtensa-lx6-rt", rev = "89cea20c441d4a1624de99c7278df13af5c211a4" }
-esp32 = "0.2.1"
+esp32 = "0.3.0"
 #esp32 = "0.6.0"
 #embedded-hal = { version = "0.2.3", features = ["unproven"] }
 #esp32-hal = { git = "https://github.com/esp-rs/esp32-hal" }
