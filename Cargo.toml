@@ -7,22 +7,4 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-xtensa-lx6-rt = { git = "https://github.com/esp-rs/xtensa-lx6-rt", rev = "89cea20c441d4a1624de99c7278df13af5c211a4" }
-esp32 = "0.3.0"
-#esp32 = "0.6.0"
-#embedded-hal = { version = "0.2.3", features = ["unproven"] }
-#esp32-hal = { git = "https://github.com/esp-rs/esp32-hal" }
-#esp32-logger = { git = "https://github.com/hanhossain/esp32-logger" }
-#spin = "0.5.2"
-
-[profile.dev]
-lto = true 
-incremental = false
-debug = false # debug adds frame pointers - which must be omitted
-codegen-units = 1
-
-[profile.release]
-lto = true
-incremental = false
-debug = false # debug adds frame pointers - which must be omitted
-codegen-units = 1
+esp32-hal = { git = "https://github.com/esp-rs/esp32-hal", default-features = false, features = ["external_ram", "mem","all_in_ram", "rt"] }

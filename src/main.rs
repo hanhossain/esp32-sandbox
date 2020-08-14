@@ -2,10 +2,8 @@
 #![no_main]
 #![feature(llvm_asm)]
 
-use xtensa_lx6_rt as _;
-
+use esp32_hal::{prelude::*, target};
 use core::panic::PanicInfo;
-use esp32;
 
 /// The default clock source is the onboard crystal
 /// In most cases 40mhz (but can be as low as 2mhz depending on the board)
@@ -15,9 +13,9 @@ const BLINKY_GPIO: u32 = 2; // the GPIO hooked up to the onboard LED
 
 const WDT_WKEY_VALUE: u32 = 0x50D83AA1;
 
-#[no_mangle]
+#[entry]
 fn main() -> ! {
-    let dp = unsafe { esp32::Peripherals::steal() };
+    let dp = unsafe { target::Peripherals::steal() };
 
     let mut gpio = dp.GPIO;
     let mut rtccntl = dp.RTCCNTL;
@@ -39,7 +37,7 @@ fn main() -> ! {
     }
 }
 
-fn disable_rtc_wdt(rtccntl: &mut esp32::RTCCNTL) {
+fn disable_rtc_wdt(rtccntl: &mut target::RTCCNTL) {
     /* Disables the RTCWDT */
     rtccntl
         .wdtwprotect
@@ -61,7 +59,7 @@ fn disable_rtc_wdt(rtccntl: &mut esp32::RTCCNTL) {
     rtccntl.wdtwprotect.write(|w| unsafe { w.bits(0x0) });
 }
 
-fn disable_timg_wdts(timg0: &mut esp32::TIMG0, timg1: &mut esp32::TIMG1) {
+fn disable_timg_wdts(timg0: &mut target::TIMG0, timg1: &mut target::TIMG1) {
     timg0
         .wdtwprotect
         .write(|w| unsafe { w.bits(WDT_WKEY_VALUE) });
@@ -73,7 +71,7 @@ fn disable_timg_wdts(timg0: &mut esp32::TIMG0, timg1: &mut esp32::TIMG1) {
     timg1.wdtconfig0.write(|w| unsafe { w.bits(0x0) });
 }
 
-pub fn set_led(reg: &mut esp32::GPIO, idx: u32, val: bool) {
+pub fn set_led(reg: &mut target::GPIO, idx: u32, val: bool) {
     if val {
         reg.out_w1ts.modify(|_, w| unsafe { w.bits(0x1 << idx) });
     } else {
@@ -82,10 +80,10 @@ pub fn set_led(reg: &mut esp32::GPIO, idx: u32, val: bool) {
 }
 
 /// Configure the pin as an output
-pub fn configure_pin_as_output(reg: &mut esp32::GPIO, gpio: u32) {
+pub fn configure_pin_as_output(reg: &mut target::GPIO, gpio: u32) {
     reg.enable_w1ts
         .modify(|_, w| unsafe { w.bits(0x1 << gpio) });
-    reg.func2_out_sel_cfg
+    reg.func_out_sel_cfg[2]
         .modify(|_, w| unsafe { w.bits(0x100) });
 }
 
