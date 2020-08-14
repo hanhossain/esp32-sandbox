@@ -1,11 +1,13 @@
 #!/bin/zsh
 
+set -e
+
 cargo xbuild
 
 # change this for release flashes
 BIN_PATH=target/xtensa-esp32-none-elf/debug/esp32-sandbox
 
-rm $BIN_PATH.bin
+test -f $BIN_PATH.bin && rm $BIN_PATH.bin
 
 # convert to bin
 esptool.py --chip esp32 elf2image --flash_mode="dio" --flash_freq "40m" --flash_size "4MB" -o $BIN_PATH.bin $BIN_PATH
