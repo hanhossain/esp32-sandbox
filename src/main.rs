@@ -3,7 +3,7 @@
 
 use core::panic::PanicInfo;
 use esp32_hal::{
-    clock_control::{sleep, ClockControl, XTAL_FREQUENCY_AUTO},
+    clock_control::{ClockControl, XTAL_FREQUENCY_AUTO},
     dport::Split,
     prelude::*,
     target,
@@ -45,9 +45,18 @@ fn main() -> ! {
     );
 
     let input = gpio.gpio0.into_pull_up_input();
+    let mut previous = true;
 
+    let mut counter = 0;
     loop {
-        log!("state: {}", input.is_high().unwrap());
+        let current = input.is_high().unwrap();
+
+        if previous && !current {
+            counter += 1;
+            log!("counter: {}", counter);
+        }
+
+        previous = current;
     }
 }
 
