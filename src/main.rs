@@ -44,11 +44,10 @@ fn main() -> ! {
         &mut dport,
     );
 
-    let mut counter = 0;
+    let input = gpio.gpio0.into_pull_up_input();
+
     loop {
-        log!("counter: {}", counter);
-        sleep(500_000.us());
-        counter += 1;
+        log!("state: {}", input.is_high().unwrap());
     }
 }
 
