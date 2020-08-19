@@ -3,20 +3,25 @@
 
 use core::panic::PanicInfo;
 use esp32_hal::{
-    clock_control::{ClockControl, XTAL_FREQUENCY_AUTO},
+    clock_control::{sleep, ClockControl, XTAL_FREQUENCY_AUTO},
     dport::Split,
+    gpio::{Event, Gpio0, Input, Pin, PullUp},
+    interrupt::Interrupt,
     prelude::*,
     target,
     timer::Timer,
 };
 use esp32_logger::*;
 
+static BUTTON: CriticalSectionSpinLockMutex<Option<Gpio0<Input<PullUp>>>> =
+    CriticalSectionSpinLockMutex::new(None);
+
+static BTN_COUNTER: CriticalSectionSpinLockMutex<usize> = CriticalSectionSpinLockMutex::new(0);
+
 #[entry]
 fn main() -> ! {
     let dp = target::Peripherals::take().expect("failed to acquire peripherals");
     let (mut dport, dport_clock_control) = dp.DPORT.split();
-
-    let gpio = dp.GPIO.split();
 
     let clock_control = ClockControl::new(
         dp.RTCCNTL,
@@ -36,28 +41,44 @@ fn main() -> ! {
     watchdog0.disable();
     watchdog1.disable();
 
+    let gpios = dp.GPIO.split();
+
     setup_logger(
         dp.UART0,
-        gpio.gpio1,
-        gpio.gpio3,
+        gpios.gpio1,
+        gpios.gpio3,
         clock_control_config,
         &mut dport,
     );
 
-    let input = gpio.gpio0.into_pull_up_input();
-    let mut previous = true;
+    let mut button = gpios.gpio0.into_pull_up_input();
+    button.listen(Event::FallingEdge);
+
+    (&BUTTON).lock(|x| *x = Some(button));
+
+    interrupt::enable(Interrupt::GPIO_INTR).unwrap();
 
     let mut counter = 0;
+
     loop {
-        let current = input.is_high().unwrap();
-
-        if previous && !current {
-            counter += 1;
-            log!("counter: {}", counter);
-        }
-
-        previous = current;
+        counter += 1;
+        log!("counter: {}", counter);
+        sleep(500.ms());
     }
+}
+
+#[interrupt]
+fn GPIO_INTR() {
+    (&BUTTON, &BTN_COUNTER).lock(|button, counter| {
+        let button = button.as_mut().unwrap();
+        *counter += 1;
+
+        if button.is_interrupt_set() {
+            // dprintln!("button pressed {} times!", counter);
+            log!("button presseed {} times!", counter);
+            button.clear_interrupt();
+        }
+    });
 }
 
 #[panic_handler]
