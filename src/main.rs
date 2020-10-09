@@ -11,7 +11,6 @@ use esp32_hal::{
     target,
     timer::Timer,
 };
-use esp32_logger::*;
 
 static BUTTON: CriticalSectionSpinLockMutex<Option<Gpio0<Input<PullUp>>>> =
     CriticalSectionSpinLockMutex::new(None);
@@ -21,7 +20,7 @@ static BTN_COUNTER: CriticalSectionSpinLockMutex<usize> = CriticalSectionSpinLoc
 #[entry]
 fn main() -> ! {
     let dp = target::Peripherals::take().expect("failed to acquire peripherals");
-    let (mut dport, dport_clock_control) = dp.DPORT.split();
+    let (_, dport_clock_control) = dp.DPORT.split();
 
     let clock_control = ClockControl::new(
         dp.RTCCNTL,
@@ -43,13 +42,7 @@ fn main() -> ! {
 
     let gpios = dp.GPIO.split();
 
-    setup_logger(
-        dp.UART0,
-        gpios.gpio1,
-        gpios.gpio3,
-        clock_control_config,
-        &mut dport,
-    );
+    esp32_logger::init(dp.UART0, gpios.gpio1, gpios.gpio3, clock_control_config);
 
     let mut button = gpios.gpio0.into_pull_up_input();
     button.listen(Event::FallingEdge);
@@ -62,7 +55,7 @@ fn main() -> ! {
 
     loop {
         counter += 1;
-        log!("counter: {}", counter);
+        esp32_logger::log!("counter: {}", counter);
         sleep(500.ms());
     }
 }
@@ -74,8 +67,7 @@ fn GPIO_INTR() {
         *counter += 1;
 
         if button.is_interrupt_set() {
-            // dprintln!("button pressed {} times!", counter);
-            log!("button presseed {} times!", counter);
+            esp32_logger::log!("button pressed {} times!", counter);
             button.clear_interrupt();
         }
     });
@@ -83,6 +75,6 @@ fn GPIO_INTR() {
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    error!("\r\n{:?}", info);
+    esp32_logger::error!("\r\n{:?}", info);
     loop {}
 }

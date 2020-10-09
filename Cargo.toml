@@ -7,5 +7,5 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-esp32-hal = { git = "https://github.com/esp-rs/esp32-hal" }
+esp32-hal = "0.2.0"
 esp32-logger = { git = "https://github.com/hanhossain/esp32-logger" }

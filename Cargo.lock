@@ -56,20 +56,21 @@ dependencies = [
 
 [[package]]
 name = "esp32"
-version = "0.6.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4f60f70487e615b7bee64d3b20765deedf29d9d4841279724d49b0bcd405977a"
+checksum = "0f840c3e92d65c9cace70cf62518cbc6562c6bced94dd771e549cd3d6719c6e7"
 dependencies = [
  "bare-metal",
  "vcell",
- "xtensa-lx6",
- "xtensa-lx6-rt",
+ "xtensa-lx",
+ "xtensa-lx-rt",
 ]
 
 [[package]]
 name = "esp32-hal"
-version = "0.1.0"
-source = "git+https://github.com/esp-rs/esp32-hal#bc790104c93cf7dec719a949c51d9770db601383"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0f275eefe77ed8841b3f7bf1de133893bc2293f26665fe71bbf2926e70f5bf34"
 dependencies = [
  "bare-metal",
  "embedded-hal",
@@ -77,14 +78,15 @@ dependencies = [
  "esp32-hal-proc-macros",
  "nb 0.1.3",
  "void",
- "xtensa-lx6",
- "xtensa-lx6-rt",
+ "xtensa-lx",
+ "xtensa-lx-rt",
 ]
 
 [[package]]
 name = "esp32-hal-proc-macros"
-version = "0.1.0"
-source = "git+https://github.com/esp-rs/esp32-hal#bc790104c93cf7dec719a949c51d9770db601383"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dbe047c6f062015c28a44de887a711fd2850975ee15452e4de83565b0a5ffdc2"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -95,7 +97,7 @@ dependencies = [
 [[package]]
 name = "esp32-logger"
 version = "0.1.0"
-source = "git+https://github.com/hanhossain/esp32-logger#1f83b6429ac98b44c1f0f1de7d851dc2b8dcc8c7"
+source = "git+https://github.com/hanhossain/esp32-logger#5bc16544f52f59314e30fcb12d6f0c7ef26ab5a1"
 dependencies = [
  "esp32-hal",
  "spin",
@@ -232,10 +234,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6a02e4885ed3bc0f2de90ea6dd45ebcbb66dacffe03547fadbb0eeae2770887d"
 
 [[package]]
-name = "xtensa-lx6"
-version = "0.2.0"
+name = "xtensa-lx"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "395c029f4dad3344e4971ec1ac32443768a4beb2b5398cc0767a695c5f1ceecf"
+checksum = "0c9e595ac23aca42f1b13ff1615f12d4265dc0fc507032dad565247b856e2f9c"
 dependencies = [
  "bare-metal",
  "mutex-trait",
@@ -244,21 +246,21 @@ dependencies = [
 ]
 
 [[package]]
-name = "xtensa-lx6-rt"
-version = "0.3.0"
+name = "xtensa-lx-rt"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "64a33e79d7b44fd5fe7a8edcbe1e75ef33a19489c9c8ea6df71645833165bfab"
+checksum = "4a4795dd0144285e37c4a581de43f361df28e130c4e27d59ce99806cd68fafab"
 dependencies = [
  "bare-metal",
  "r0",
- "xtensa-lx6-rt-proc-macros",
+ "xtensa-lx-rt-proc-macros",
 ]
 
 [[package]]
-name = "xtensa-lx6-rt-proc-macros"
+name = "xtensa-lx-rt-proc-macros"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5cc53fb3d5627eca5ccc10a9778bdbda3c1aa2b2ba41bf6fd4e8915f766a40cc"
+checksum = "21a8200930e2dbd515c231f7a46033bd6dfe1497a8e9a539878f0de8f0cd730b"
 dependencies = [
  "proc-macro2",
  "quote",
