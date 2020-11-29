@@ -1,6 +1,3 @@
-[target.xtensa-esp32-none-elf]
-runner = "./flash.sh"
-
 [build]
 rustflags = [
   "-C", "link-arg=-nostartfiles",
