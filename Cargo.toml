@@ -8,4 +8,3 @@ edition = "2018"
 
 [dependencies]
 esp32-hal = "0.2.0"
-esp32-logger = { git = "https://github.com/hanhossain/esp32-logger" }

@@ -95,20 +95,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "esp32-logger"
-version = "0.1.0"
-source = "git+https://github.com/hanhossain/esp32-logger#5bc16544f52f59314e30fcb12d6f0c7ef26ab5a1"
-dependencies = [
- "esp32-hal",
- "spin",
-]
-
-[[package]]
 name = "esp32-sandbox"
 version = "0.1.0"
 dependencies = [
  "esp32-hal",
- "esp32-logger",
 ]
 
 [[package]]

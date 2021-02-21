@@ -5,17 +5,11 @@ use core::panic::PanicInfo;
 use esp32_hal::{
     clock_control::{sleep, ClockControl, XTAL_FREQUENCY_AUTO},
     dport::Split,
-    gpio::{Event, Gpio0, Input, Pin, PullUp},
-    interrupt::Interrupt,
     prelude::*,
     target,
     timer::Timer,
+    {dprint, dprintln},
 };
-
-static BUTTON: CriticalSectionSpinLockMutex<Option<Gpio0<Input<PullUp>>>> =
-    CriticalSectionSpinLockMutex::new(None);
-
-static BTN_COUNTER: CriticalSectionSpinLockMutex<usize> = CriticalSectionSpinLockMutex::new(0);
 
 #[entry]
 fn main() -> ! {
@@ -41,40 +35,29 @@ fn main() -> ! {
     watchdog1.disable();
 
     let gpios = dp.GPIO.split();
-
-    esp32_logger::init(dp.UART0, gpios.gpio1, gpios.gpio3, clock_control_config);
-
-    let mut button = gpios.gpio0.into_pull_up_input();
-    button.listen(Event::FallingEdge);
-
-    (&BUTTON).lock(|x| *x = Some(button));
-
-    interrupt::enable(Interrupt::GPIO_INTR).unwrap();
+    let mut led = gpios.gpio25.into_push_pull_output();
 
     let mut counter = 0;
 
     loop {
         counter += 1;
-        esp32_logger::log!("counter: {}", counter);
+
+        dprintln!("LED On - {}", counter);
+        led.set_high().unwrap();
         sleep(500.ms());
-    }
-}
 
-#[interrupt]
-fn GPIO_INTR() {
-    (&BUTTON, &BTN_COUNTER).lock(|button, counter| {
-        let button = button.as_mut().unwrap();
-        *counter += 1;
+        dprintln!("LED Off - {}", counter);
+        led.set_low().unwrap();
+        sleep(500.ms());
 
-        if button.is_interrupt_set() {
-            esp32_logger::log!("button pressed {} times!", counter);
-            button.clear_interrupt();
+        if counter > 5 {
+            assert_eq!(3, 4);
         }
-    });
+    }
 }
 
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
-    esp32_logger::error!("\r\n{:?}", info);
+    dprintln!("{:?}", info);
     loop {}
 }
