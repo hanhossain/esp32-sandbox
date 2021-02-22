@@ -10,6 +10,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "cfg-if"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+
+[[package]]
 name = "darling"
 version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -95,10 +101,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "esp32-logger"
+version = "0.1.0"
+source = "git+https://github.com/hanhossain/esp32-logger#91f0efb2b4a8d1ab6c27d42edeb997a883e15564"
+dependencies = [
+ "esp32-hal",
+ "log",
+]
+
+[[package]]
 name = "esp32-sandbox"
 version = "0.1.0"
 dependencies = [
  "esp32-hal",
+ "esp32-logger",
+ "log",
 ]
 
 [[package]]
@@ -112,6 +129,15 @@ name = "ident_case"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b9e0384b61958566e926dc50660321d12159025e767c18e043daf26b70104c39"
+
+[[package]]
+name = "log"
+version = "0.4.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "51b9bbe6c47d51fc3e1a9b945965946b4c44142ab8792c50835a980d362c2710"
+dependencies = [
+ "cfg-if",
+]
 
 [[package]]
 name = "mutex-trait"
