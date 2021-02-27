@@ -3,7 +3,7 @@
 This is a simple sandbox to test out some functionality on the ESP32 with rust.
 
 ## Environment Setup
-If you're using clion, then you should do the following to enable IntelliSense.
+If you're using CLion, then you should do the following to enable IntelliSense.
 
 1. Link the custom rust build into rustup.
 ```shell
@@ -22,7 +22,7 @@ rustup override set xtensa
 source setenv.sh
 ```
 
-4. Open Clion in this directory
+4. Open CLion in this directory
 ```shell
 clion .
 ```
