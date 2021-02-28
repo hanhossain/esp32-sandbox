@@ -9,7 +9,7 @@ use esp32_hal::{
     target,
     timer::Timer,
 };
-use log::{error, info, trace, LevelFilter};
+use log::{error, info, LevelFilter};
 
 #[entry]
 fn main() -> ! {
@@ -34,29 +34,15 @@ fn main() -> ! {
     watchdog0.disable();
     watchdog1.disable();
 
-    let gpios = dp.GPIO.split();
-
     esp32_logger::init_with_level(LevelFilter::Trace);
-
-    let mut led = gpios.gpio25.into_push_pull_output();
-    trace!("Initialized led");
 
     let mut counter = 0;
 
     loop {
         counter += 1;
 
-        info!("LED On - {}", counter);
-        led.set_high().unwrap();
-        sleep(500.ms());
-
-        info!("LED Off - {}", counter);
-        led.set_low().unwrap();
-        sleep(500.ms());
-
-        if counter > 5 {
-            assert_eq!(3, 4);
-        }
+        info!("Counter: {}", counter);
+        sleep(1.s());
     }
 }
 
